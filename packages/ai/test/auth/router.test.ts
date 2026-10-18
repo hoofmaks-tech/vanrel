@@ -56,8 +56,8 @@ describe("ProviderRouter (§4.2.4)", () => {
 	it("route: first from order with credential; aliases → concrete model ids", () => {
 		const router = makeRouter(authWith("anthropic", "agy", "codex"));
 		const t = router.route({ model: "default" });
-		expect(t).toMatchObject({ provider: "anthropic", model: "claude-sonnet-5", attempt: 0 });
-		expect(router.route({ model: "cheap" }).model).toBe("claude-haiku-4-5");
+		expect(t).toMatchObject({ provider: "anthropic", model: "claude-sonnet-5-5", attempt: 0 });
+		expect(router.route({ model: "cheap" }).model).toBe("claude-haiku-5-5");
 		expect(router.route({ model: "claude-opus-5" }).model).toBe("claude-opus-5"); // explicit id
 	});
 
@@ -122,7 +122,7 @@ describe("ProviderRouter (§4.2.4)", () => {
 	it("reportSuccess writes a UsageRecord to the ledger", async () => {
 		const router = makeRouter(authWith("codex"));
 		const t: RoutedTarget = router.route({ model: "default" });
-		expect(t.model).toBe("gpt-5.5");
+		expect(t.model).toBe("gpt-6.1-sol");
 		await router.reportSuccess(t, usage("codex"));
 		expect(quota.peek("codex")[0]?.window.requests).toBe(1);
 	});

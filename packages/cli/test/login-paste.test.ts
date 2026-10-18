@@ -83,7 +83,9 @@ describe("loginCommand --paste-code (recon §5 item 6)", () => {
 		expect(code).toBe(EXIT_OK);
 		expect(stdout()).toContain("https://example.test/auth?x=1");
 		expect(stdout()).toContain("copy the code from the page");
-		expect(stdout()).toContain("codex authenticated");
+		expect(stdout()).toContain("vanrel: codex authenticated\n");
+		expect(stdout()).not.toContain("expires");
+		expect(stdout()).not.toContain("stored in");
 		expect(seen).toEqual(["mycode#mystate"]);
 	});
 
@@ -95,6 +97,8 @@ describe("loginCommand --paste-code (recon §5 item 6)", () => {
 			return fakeCred;
 		});
 		const { io, stdout } = fakeIo("");
+		// fakeIo's stdout is a plain Writable without isTTY, so the TTY-guarded openBrowser() is skipped.
+		expect((io.stdout as { isTTY?: boolean }).isTTY).toBeUndefined();
 		const code = await loginCommand("codex", paths, io, GATEWAY_NOOP_LOGGER, { providers: [provider] });
 		expect(code).toBe(EXIT_OK);
 		expect(stdout()).toContain("vanrel login codex --paste-code");

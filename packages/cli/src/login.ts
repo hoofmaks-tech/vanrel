@@ -1,7 +1,8 @@
 /**
  * `vanrel login <provider> [--paste-code]` (§4.6): interactive OAuth flow
  * AuthProvider.login (§4.2.1), persisted inside the gateway via FileCredentialStore (§5.5).
- * onAuthUrl → print the URL. --paste-code: manual code entry via readline on io.stdin
+ * onAuthUrl → open the URL in the browser when stdout is a TTY, and print it.
+ * --paste-code: manual code entry via readline on io.stdin
  * (headless/SSH; re-prompt up to 3 times without network — inside runManualCodeLogin).
  * AuthFlowError/AuthLockError → exit 2; SIGINT → 130; success → 0.
  */
@@ -9,6 +10,7 @@ import * as readline from "node:readline/promises";
 import { AuthFlowError, AuthLockError, type AuthProvider, type AuthProviderId, builtinAuthProviders } from "@vanrel/ai";
 import type { Logger } from "@vanrel/telemetry";
 import { EXIT_AUTH, EXIT_ERROR, EXIT_OK, EXIT_SIGINT } from "./args.ts";
+import { openBrowser } from "./interactive/utils/open-browser.ts";
 import type { VanrelPaths } from "./paths.ts";
 import type { CliIo } from "./run.ts";
 
@@ -66,6 +68,7 @@ export async function loginCommand(
 				if (pasteCode) {
 					io.stdout.write(`Open this URL in a browser:\n${url}\n\n`);
 				} else {
+					if ((io.stdout as { isTTY?: boolean }).isTTY === true) openBrowser(url);
 					io.stdout.write(
 						`Open this URL in a browser to authenticate:\n${url}\n\n` +
 							"Waiting for the browser callback on the local redirect port.\n" +
@@ -78,10 +81,9 @@ export async function loginCommand(
 			provider: providerId,
 			expiresAt: cred.expiresAt,
 			flow: pasteCode ? "paste-code" : "loopback",
+			storedIn: paths.authFile,
 		});
-		io.stdout.write(
-			`vanrel: ${providerId} authenticated (expires ${new Date(cred.expiresAt).toISOString()}), stored in ${paths.authFile}\n`,
-		);
+		io.stdout.write(`vanrel: ${providerId} authenticated\n`);
 		return EXIT_OK;
 	} catch (error) {
 		if (abort.signal.aborted) {

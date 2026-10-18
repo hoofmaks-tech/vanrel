@@ -20,8 +20,8 @@ import type { QuotaLedger } from "./quota-ledger.ts";
 
 /** Default aliases → ids from the vendored model catalog (src/providers/*.models.ts). */
 export const DEFAULT_MODEL_ALIASES: Record<string, Partial<Record<AuthProviderId, string>>> = {
-	default: { anthropic: "claude-sonnet-5", agy: "gemini-3-pro-preview", codex: "gpt-5.5" },
-	cheap: { anthropic: "claude-haiku-4-5", agy: "gemini-3-flash", codex: "gpt-5.3-codex" },
+	default: { anthropic: "claude-sonnet-5-5", agy: "gemini-4-argon", codex: "gpt-6.1-sol" },
+	cheap: { anthropic: "claude-haiku-5-5", agy: "gemini-3.8-flash", codex: "gpt-6-luna" },
 };
 
 const DEFAULT_TRANSIENT_BACKOFF_MS = [1000, 4000, 15000];

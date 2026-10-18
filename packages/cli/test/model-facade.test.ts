@@ -60,15 +60,15 @@ describe("DefaultModelFacade (M3)", () => {
 				},
 			});
 
-			expect(facade.current().id).toBe("claude-sonnet-5");
+			expect(facade.current().id).toBe("claude-sonnet-5-5");
 			failChange = true;
 			expect(() => facade.set("cheap")).toThrow(BudgetError);
-			// Completely unchanged state: current() did not switch to claude-haiku-4-5.
-			expect(facade.current().id).toBe("claude-sonnet-5");
+			// Completely unchanged state: current() did not switch to claude-haiku-5-5.
+			expect(facade.current().id).toBe("claude-sonnet-5-5");
 
 			failChange = false;
 			facade.set("cheap");
-			expect(facade.current().id).toBe("claude-haiku-4-5");
+			expect(facade.current().id).toBe("claude-haiku-5-5");
 		} finally {
 			await runtime.close("completed");
 		}

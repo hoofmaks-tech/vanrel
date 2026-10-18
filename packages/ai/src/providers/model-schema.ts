@@ -21,7 +21,7 @@ export const ModelPromptCacheSchema = Type.Partial(
 	Type.Record(Type.Enum(MODEL_PROMPT_CACHE_RETENTIONS), Type.Number({ exclusiveMinimum: 0 })),
 	{
 		description:
-			"Best-effort prompt cache lifetime in seconds for the short and long retention tiers. Pi warms only tiers with a known lifetime.",
+			"Best-effort prompt cache lifetime in seconds for the short and long retention tiers. vanrel warms only tiers with a known lifetime.",
 	},
 );
 

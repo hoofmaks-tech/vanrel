@@ -33,6 +33,8 @@ vanrel login codex       # ChatGPT
 
 On a headless machine, add `--paste-code`. Credentials from `~/.claude`, `~/.codex`, and `~/.gemini` are picked up read-only if present. `vanrel auth status` shows what was found and why anything was skipped.
 
+The agy consent screen uses gemini-cli's public OAuth client by default. To show your own app name instead, create an "installed app" OAuth client in Google Cloud and set `VANREL_AGY_OAUTH_CLIENT_ID` / `VANREL_AGY_OAUTH_CLIENT_SECRET` before `vanrel login agy`.
+
 ## Usage
 
 ```sh
@@ -57,6 +59,7 @@ Config lives in `~/.vanrel/config.json`: provider order, model aliases (`default
 ```sh
 npm test     # 243 tests, no network
 npm run check
+npm run models:sync   # refresh vendored model catalogs from the latest pi-ai release
 ```
 
 ## License

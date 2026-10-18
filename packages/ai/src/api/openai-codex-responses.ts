@@ -1645,7 +1645,7 @@ function buildBaseCodexHeaders(
 	token: string,
 ): Headers {
 	// Defaults first so model and caller headers can override them, matching the other providers.
-	const headers = new Headers({ originator: "pi", "User-Agent": getPiUserAgent() });
+	const headers = new Headers({ originator: "vanrel", "User-Agent": getPiUserAgent() });
 	for (const [key, value] of Object.entries(initHeaders || {})) {
 		headers.set(key, value);
 	}

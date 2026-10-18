@@ -45,14 +45,14 @@ describe("parseArgs (CLI contract §4.6)", () => {
 
 	it("flag combination", () => {
 		expect(
-			parseArgs(["--no-splash", "--print", "x", "--session", "s1", "--provider", "codex", "--model", "gpt-5.5"]),
+			parseArgs(["--no-splash", "--print", "x", "--session", "s1", "--provider", "codex", "--model", "gpt-6.1-sol"]),
 		).toEqual({
 			kind: "run",
 			print: "x",
 			sessionId: "s1",
 			noSplash: true,
 			provider: "codex",
-			model: "gpt-5.5",
+			model: "gpt-6.1-sol",
 		});
 	});
 

@@ -73,20 +73,20 @@ describe("wiring remediation (M3/M6)", () => {
 		await writeAuthFile(paths, ["anthropic", "agy"]);
 		const runtime = await createSessionRuntime({ cwd: dir, argv: ["vanrel"], paths, config: {}, log: NOOP_LOGGER });
 		try {
-			expect(runtime.agent.state.model.id).toBe("claude-sonnet-5"); // default, W=200000
+			expect(runtime.agent.state.model.id).toBe("claude-sonnet-5-5"); // default, W=1000000
 
 			budgetControl.failNext = true;
-			expect(() => runtime.setModel("agy/gemini-3-pro-preview")).toThrow(BudgetError);
+			expect(() => runtime.setModel("agy/gemini-4-argon")).toThrow(BudgetError);
 
-			// State fully unchanged: the budget in compactNow is computed for the OLD model (W=200000),
+			// State fully unchanged: the budget in compactNow is computed for the OLD model (W=1000000),
 			// not agy (W=1048576) — a marker of an unmutated currentModel.
 			budgetControl.seen.length = 0;
 			await runtime.compactNow();
-			expect(budgetControl.seen.at(-1)).toBe(200_000);
+			expect(budgetControl.seen.at(-1)).toBe(1_000_000);
 
 			// Once the failure is lifted the same transition commits — no half-synchronized state.
-			const model = runtime.setModel("agy/gemini-3-pro-preview");
-			expect(model.id).toBe("gemini-3-pro-preview");
+			const model = runtime.setModel("agy/gemini-4-argon");
+			expect(model.id).toBe("gemini-4-argon");
 			budgetControl.seen.length = 0;
 			await runtime.compactNow();
 			expect(budgetControl.seen.at(-1)).toBe(1_048_576);

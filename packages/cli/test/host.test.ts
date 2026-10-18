@@ -133,10 +133,10 @@ describe("interactive host (W14)", () => {
 		expect(events.some((e) => e.type === "compaction_start" && e.reason === "manual")).toBe(true);
 		expect(smallEnd?.type === "compaction_end" && smallEnd.result?.compacted).toBe(false);
 
-		// Stuff the history directly: 16 user+toolResult turns with ~60KB of raw output each
-		// (≈274k tokens against a ≈117k threshold for claude-sonnet-5 200k).
+		// Stuff the history directly: 48 user+toolResult turns with ~60KB of raw output each
+		// (≈840k tokens against a ≈590k threshold for claude-sonnet-5-5 1M).
 		const big = "x".repeat(60 * 1024);
-		for (let i = 0; i < 16; i++) {
+		for (let i = 0; i < 48; i++) {
 			runtime.agent.state.messages.push(
 				{ role: "user", content: `q${i}`, timestamp: Date.now() },
 				{
@@ -206,10 +206,10 @@ describe("interactive host (W14)", () => {
 
 		expect(() => host.setModel("")).toThrow(RouteError);
 		expect(() => host.setModel("anthropic/no-such-model")).toThrow(RouteError);
-		expect(() => host.setModel("agy/gemini-3-pro-preview")).toThrow(RouteError); // not logged in
+		expect(() => host.setModel("agy/gemini-4-argon")).toThrow(RouteError); // not logged in
 
 		host.setModel("cheap");
-		expect(runtime.agent.state.model.id).toBe("claude-haiku-4-5");
+		expect(runtime.agent.state.model.id).toBe("claude-haiku-5-5");
 
 		host.setThinkingLevel("high");
 		expect(runtime.agent.state.thinkingLevel).toBe("high");

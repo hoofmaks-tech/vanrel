@@ -20,9 +20,20 @@ import { LOGIN_CALLBACK_TIMEOUT_MS, runBrowserLogin } from "./login.ts";
 import { parseAuthorizationInput, runManualCodeLogin } from "./manual-login.ts";
 import { oauthErrorCode, postTokenEndpoint, readExternalJson } from "./shared.ts";
 
-const CLIENT_ID = "681255809395-oo8ft2oprdrnp9e3aqf6av3hmdib135j.apps.googleusercontent.com";
+// Defaults are gemini-cli's public installed-app OAuth client (§5.1) — the Google consent
+// screen shows that app's name. Set VANREL_AGY_OAUTH_CLIENT_ID / VANREL_AGY_OAUTH_CLIENT_SECRET
+// to your own Google Cloud "installed app" client to brand the consent screen as vanrel.
+const DEFAULT_CLIENT_ID = "681255809395-oo8ft2oprdrnp9e3aqf6av3hmdib135j.apps.googleusercontent.com";
 // Public "installed application" secret from gemini-cli (§5.1) — not a paid key.
-const CLIENT_SECRET = "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";
+const DEFAULT_CLIENT_SECRET = "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";
+
+function oauthClientId(): string {
+	return process.env.VANREL_AGY_OAUTH_CLIENT_ID ?? DEFAULT_CLIENT_ID;
+}
+
+function oauthClientSecret(): string {
+	return process.env.VANREL_AGY_OAUTH_CLIENT_SECRET ?? DEFAULT_CLIENT_SECRET;
+}
 const AUTHORIZE_URL = "https://accounts.google.com/o/oauth2/v2/auth";
 const TOKEN_URL = "https://oauth2.googleapis.com/token";
 const SCOPES = [
@@ -215,8 +226,8 @@ export class AgyAuthProvider implements AuthProvider {
 						TOKEN_URL,
 						{
 							form: {
-								client_id: adc?.kind === "authorized_user" ? adc.clientId : CLIENT_ID,
-								client_secret: adc?.kind === "authorized_user" ? adc.clientSecret : CLIENT_SECRET,
+								client_id: adc?.kind === "authorized_user" ? adc.clientId : oauthClientId(),
+								client_secret: adc?.kind === "authorized_user" ? adc.clientSecret : oauthClientSecret(),
 								grant_type: "refresh_token",
 								refresh_token: adc?.kind === "authorized_user" ? adc.refreshToken : cred.refreshToken,
 							},
@@ -280,8 +291,8 @@ export class AgyAuthProvider implements AuthProvider {
 	private async exchangeCode(code: string, redirectUri: string, codeVerifier?: string): Promise<Credential> {
 		const form: Record<string, string> = {
 			code,
-			client_id: CLIENT_ID,
-			client_secret: CLIENT_SECRET,
+			client_id: oauthClientId(),
+			client_secret: oauthClientSecret(),
 			redirect_uri: redirectUri,
 			grant_type: "authorization_code",
 		};
@@ -317,6 +328,9 @@ export class AgyAuthProvider implements AuthProvider {
 	}
 
 	async login(options?: LoginOptions): Promise<Credential> {
+		if (process.env.VANREL_AGY_OAUTH_CLIENT_ID !== undefined) {
+			this.log.debug("agy login: custom OAuth client via VANREL_AGY_OAUTH_CLIENT_ID");
+		}
 		const state = randomBytes(16).toString("hex");
 		const signal = options?.signal;
 		if (options?.flow === "paste-code") {
@@ -332,7 +346,7 @@ export class AgyAuthProvider implements AuthProvider {
 				log: this.log,
 				buildAuthUrl: () => {
 					const params = new URLSearchParams({
-						client_id: CLIENT_ID,
+						client_id: oauthClientId(),
 						redirect_uri: MANUAL_REDIRECT_URI,
 						response_type: "code",
 						scope: SCOPES,
@@ -380,7 +394,7 @@ export class AgyAuthProvider implements AuthProvider {
 			// Web-flow WITHOUT PKCE (§5.1); PKCE — only for the user-code headless flow.
 			buildAuthUrl: (redirectUri) => {
 				const params = new URLSearchParams({
-					client_id: CLIENT_ID,
+					client_id: oauthClientId(),
 					redirect_uri: redirectUri,
 					response_type: "code",
 					scope: SCOPES,
