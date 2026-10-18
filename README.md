@@ -61,4 +61,4 @@ npm run check
 
 ## License
 
-MIT. Includes code vendored from [earendil-works/pi](https://github.com/earendil-works/pi) (MIT, © 2025 Mario Zechner). See [NOTICE](NOTICE).
+[Apache-2.0](LICENSE).

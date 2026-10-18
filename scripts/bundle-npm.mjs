@@ -47,7 +47,7 @@ writeFileSync(
 			version,
 			description:
 				"Terminal AI harness on subscription OAuth (Claude Code, Antigravity, Codex). Zero-dependency single-file build.",
-			license: "MIT",
+			license: "Apache-2.0",
 			type: "module",
 			bin: { vanrel: "./vanrel.js" },
 			files: ["vanrel.js", "dark.json", "light.json", "README.md", "LICENSE", "NOTICE"],
