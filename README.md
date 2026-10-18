@@ -4,7 +4,14 @@
 
 ## Quickstart
 
-Requires Node.js 22+. The npm package is a name placeholder until the first release, so build from source:
+Requires Node.js 22+.
+
+```sh
+npm install -g vanrel
+vanrel
+```
+
+To build from source instead:
 
 ```sh
 git clone https://github.com/shleder/vanrel.git
@@ -12,12 +19,6 @@ cd vanrel
 npm ci --legacy-peer-deps
 npm run build
 node packages/cli/dist/main.js --help
-```
-
-To get a global `vanrel` command, link the CLI:
-
-```sh
-npm link -w @vanrel/cli
 ```
 
 ## Sign in
