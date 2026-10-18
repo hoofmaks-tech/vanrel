@@ -1,0 +1,23 @@
+{
+	"extends": "./tsconfig.base.json",
+	"compilerOptions": {
+		"noEmit": true,
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
+		"paths": {
+			"@vanrel/telemetry": ["./packages/telemetry/src/index.ts"],
+			"@vanrel/ai": ["./packages/ai/src/index.ts"],
+			"@vanrel/ai/*": ["./packages/ai/src/*.ts", "./packages/ai/src/providers/*.ts"],
+			"@vanrel/context": ["./packages/context/src/index.ts"],
+			"@vanrel/agent": ["./packages/agent/src/index.ts"],
+			"@vanrel/qc": ["./packages/qc/src/index.ts"],
+			"@vanrel/mcp": ["./packages/mcp/src/index.ts"],
+			"@vanrel/tui": ["./packages/tui/src/index.ts"],
+			"@vanrel/cli": ["./packages/cli/src/index.ts"]
+		}
+	},
+	"include": [
+		"packages/*/src/**/*.ts",
+		"packages/*/test/**/*.ts"
+	]
+}

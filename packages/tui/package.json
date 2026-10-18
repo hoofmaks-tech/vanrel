@@ -1,0 +1,13 @@
+{
+	"name": "@vanrel/tui",
+	"version": "0.1.0",
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": { ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" } },
+	"scripts": { "build": "tsc -p tsconfig.json", "test": "vitest run" },
+	"dependencies": {
+		"get-east-asian-width": "1.6.0",
+		"marked": "18.0.11"
+	}
+}

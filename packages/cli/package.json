@@ -1,0 +1,32 @@
+{
+	"name": "@vanrel/cli",
+	"version": "0.1.0",
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"bin": {
+		"vanrel": "./dist/main.js"
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"build": "tsc -p tsconfig.json",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"@vanrel/agent": "0.1.0",
+		"@vanrel/ai": "0.1.0",
+		"@vanrel/context": "0.1.0",
+		"@vanrel/mcp": "^0.1.0",
+		"@vanrel/qc": "0.1.0",
+		"@vanrel/telemetry": "0.1.0",
+		"@vanrel/tui": "0.1.0",
+		"diff": "^8.0.4",
+		"highlight.js": "^10.7.3",
+		"typebox": "^1.3.27"
+	}
+}

@@ -1,0 +1,45 @@
+{
+  "naiveTotal": 5608355,
+  "vanrelTotal": 494095,
+  "compactionCost": 0,
+  "K": 11.35076250518625,
+  "compactionTriggered": false,
+  "typicalFilteredBytes": 4597,
+  "rawBytesByClass": {
+    "build": 1434315,
+    "test": 368780,
+    "git-diff": 143419
+  },
+  "filteredBytesByClass": {
+    "build": 46010,
+    "test": 15755,
+    "git-diff": 16815
+  },
+  "policies": {
+    "build": {
+      "maxBytes": 6144,
+      "headLines": 20,
+      "tailLines": 40,
+      "errorContextLines": 2
+    },
+    "test": {
+      "maxBytes": 6144,
+      "headLines": 10,
+      "tailLines": 30,
+      "errorContextLines": 2
+    },
+    "git-diff": {
+      "maxBytes": 8192,
+      "headLines": 0,
+      "tailLines": 0,
+      "errorContextLines": 0,
+      "gitDiffMaxFiles": 3
+    },
+    "generic": {
+      "maxBytes": 8192,
+      "headLines": 40,
+      "tailLines": 60,
+      "errorContextLines": 0
+    }
+  }
+}

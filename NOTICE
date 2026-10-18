@@ -1,0 +1,15 @@
+vanrel
+Copyright (c) 2026 shleder
+
+vanrel itself is distributed under the MIT License (see LICENSE).
+
+This repository contains code vendored from earendil-works/pi
+(https://github.com/earendil-works/pi), MIT License, Copyright (c) 2025
+Mario Zechner:
+
+  - packages/ai, packages/agent, packages/tui, packages/mcp
+  - parts of packages/cli (see per-file "Vendored from earendil-works/pi"
+    headers and the interactive theme JSON assets)
+
+The full MIT license text of pi is included in the LICENSE file at the root
+of this repository.

@@ -1,0 +1,57 @@
+// Curated minimal catalog for the vanrel vendor strip (replaces the generated
+// data/anthropic.json catalog; `scripts/generate-models` is not run here).
+import type { Model } from "../types.ts";
+
+export const ANTHROPIC_MODELS = {
+	"claude-opus-5": {
+		id: "claude-opus-5",
+		name: "Claude Opus 5",
+		api: "anthropic-messages",
+		provider: "anthropic",
+		baseUrl: "https://api.anthropic.com",
+		input: ["text", "image"],
+		cost: { input: 15, output: 75, cacheRead: 1.5, cacheWrite: 18.75 },
+		reasoning: true,
+		contextWindow: 200000,
+		maxTokens: 64000,
+		compat: { forceAdaptiveThinking: true },
+	},
+	"claude-opus-4-8": {
+		id: "claude-opus-4-8",
+		name: "Claude Opus 4.8",
+		api: "anthropic-messages",
+		provider: "anthropic",
+		baseUrl: "https://api.anthropic.com",
+		input: ["text", "image"],
+		cost: { input: 15, output: 75, cacheRead: 1.5, cacheWrite: 18.75 },
+		reasoning: true,
+		contextWindow: 200000,
+		maxTokens: 64000,
+		compat: { forceAdaptiveThinking: true },
+	},
+	"claude-sonnet-5": {
+		id: "claude-sonnet-5",
+		name: "Claude Sonnet 5",
+		api: "anthropic-messages",
+		provider: "anthropic",
+		baseUrl: "https://api.anthropic.com",
+		input: ["text", "image"],
+		cost: { input: 3, output: 15, cacheRead: 0.3, cacheWrite: 3.75 },
+		reasoning: true,
+		contextWindow: 200000,
+		maxTokens: 64000,
+		compat: { forceAdaptiveThinking: true },
+	},
+	"claude-haiku-4-5": {
+		id: "claude-haiku-4-5",
+		name: "Claude Haiku 4.5",
+		api: "anthropic-messages",
+		provider: "anthropic",
+		baseUrl: "https://api.anthropic.com",
+		input: ["text", "image"],
+		cost: { input: 1, output: 5, cacheRead: 0.1, cacheWrite: 1.25 },
+		reasoning: true,
+		contextWindow: 200000,
+		maxTokens: 64000,
+	},
+} satisfies Record<string, Model<"anthropic-messages">>;
