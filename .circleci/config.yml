@@ -17,6 +17,9 @@ jobs:
           name: Static checks (tsc + biome + import graph)
           command: npm run check
       - run:
+          name: Build workspaces (cli tests consume built dist)
+          command: npm run build
+      - run:
           name: Tests
           command: npm test
 
